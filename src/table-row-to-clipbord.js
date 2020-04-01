@@ -20,5 +20,6 @@
     });
     navigator.clipboard.writeText(clip_data.join('\r\n'));
     alert("クリップボードにコピーしました");
+    document.body.onclick = null;
   }
 });
