@@ -9,7 +9,7 @@
   sheet.insertRule("tbody tr:last-child .table-row-to-clipbord-current { border-bottom: 2px solid rgba(242, 120, 75, 1) !important; }", 2);
   sheet.insertRule("thead ~ tbody tr:first-child .table-row-to-clipbord-current { border-top: inherit !important; }", 3);
 
-  alert("テーブルのコピーしたい列をクリックしてください");
+  console.log("テーブルのコピーしたい列をクリックしてください");
 
   // テーブルのセルをクリックしたときのコピー処理
   document.body.onclick = function(event) {
@@ -34,7 +34,7 @@
     textarea.select();
     document.execCommand("copy");
     textarea.parentElement.removeChild(textarea);
-    alert("クリップボードにコピーしました");
+    console.log("クリップボードにコピーしました");
 
     document.body.onclick = null;
     document.body.onmouseover = null;
