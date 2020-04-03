@@ -15,7 +15,7 @@ function makezip() {
 
   console.log("img-downloader start.");
 
-  // 画像タグのリスト
+  // 重複を除いた画像タグのリスト
   var imgs = Object.values(Array.from(document.body.querySelectorAll('img')).reduce(function(pre, curr) {
     if (!pre[curr.src]) pre[curr.src] = curr;
     return pre;
@@ -31,7 +31,7 @@ function makezip() {
   var zip = new JSZip();
   for (let i = 0; i < imgs.length; i++) {
     let filename = imgs[i].src.match(".+/(.+?)([\?#;].*)?$")[1];
-    // 第1引数がファイル名、第2引数が画像データ(無名関数内でJSZipUtilsで取得)
+    // 第1引数がファイル名、第2引数が画像データ(無名関数内でJSZipUtilsで取得)、第3引数はオプション
     zip.file(filename, (function(image_path){
       console.log(image_path);
       return new Promise(function(resolve, reject) {
