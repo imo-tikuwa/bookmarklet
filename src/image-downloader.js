@@ -1,61 +1,53 @@
-!function(d,f,s){s=d.createElement("script");s.src="//j.mp/1bPoAXq";s.onload=function(){f(jQuery.noConflict(1))};d.body.appendChild(s)}(document,function imageDownloader($){
 
+// 外部jsライブラリ読み込み(初回のみ)
+if (typeof JSZip == 'undefined') {
+  var jszip = document.createElement("script"), jsziputil = document.createElement("script"), filesaver = document.createElement("script");
+  jszip.src = "//cdnjs.cloudflare.com/ajax/libs/jszip/3.3.0/jszip.min.js";
+  document.body.appendChild(jszip);
+  jsziputil.src = "//cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js";
+  document.body.appendChild(jsziputil);
+  filesaver.src = "//cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js";
+  document.body.appendChild(filesaver);
+}
 
-  // 外部jsライブラリ読み込み(初回のみ読み込み)
-  console.log($(document).find("script[src*=jszip]").length);
-  if ($(document).find("script[src*=jszip]").length == 0) {
-    var jszip = document.createElement("script"), filesaver = document.createElement("script");
-    jszip.src = "//cdnjs.cloudflare.com/ajax/libs/jszip/3.3.0/jszip.min.js";
-    document.body.appendChild(jszip);
-    filesaver.src = "//cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js";
-    document.body.appendChild(filesaver);
-    return imageDownloader($);
-  }
+setTimeout(makezip, 100);
+function makezip() {
 
   console.log("img-downloader start.");
-  $("body").append("<div id='tkw-overlay'></div>");
 
-  // CSS作成
-  var style = document.createElement("style");
-  document.head.appendChild(style);
-  var sheet = style.sheet;
-  var overlay_height = $(document).height() + 'px';
-  sheet.insertRule("#tkw-overlay { background-color: #777 !important;opacity: 0.2;position: absolute;z-index: 9999;top: 0;left: 0;width: 100%;height: " + overlay_height + " }", 0);
+  // 画像タグのリスト
+  var imgs = Object.values(Array.from(document.body.querySelectorAll('img')).reduce(function(pre, curr) {
+    if (!pre[curr.src]) pre[curr.src] = curr;
+    return pre;
+  }, {}));
+  if (imgs.length <= 0) {
+    alert("画像が見つかりませんでした。");
+    document.body.removeChild(overlay);
+    console.log("img-downloader end.");
+    return false;
+  }
 
+  // zip生成
   var zip = new JSZip();
-  var deferreds = $.Deferred();
-  var promise = deferreds;
-
-  $(document).find('img').each(function(idx, obj){
-    console.log($(obj).attr('src'));
-
-    promise = promise.then(function() {
-      var new_promise = new $.Deferred();
-
-      // 画像を読み込んでzipにレスポンスデータを追加
-      let image_path = $(obj).attr('src');
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', image_path, true);
-      xhr.responseType = 'arraybuffer';
-      xhr.onload = function(e) {
-        if (this.status == 200) {
-          zip.file(image_path.match(".+/(.+?)([\?#;].*)?$")[1], xhr.response);
-          new_promise.resolve();
-        }
-      };
-      xhr.send();
-
-      return new_promise;
-    });
+  for (let i = 0; i < imgs.length; i++) {
+    let filename = imgs[i].src.match(".+/(.+?)([\?#;].*)?$")[1];
+    // 第1引数がファイル名、第2引数が画像データ(無名関数内でJSZipUtilsで取得)
+    zip.file(filename, (function(image_path){
+      console.log(image_path);
+      return new Promise(function(resolve, reject) {
+        JSZipUtils.getBinaryContent(image_path, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    })(imgs[i].src), {binary:true});
+  }
+  zip.generateAsync({type:"blob"}).then(function (content) {
+    saveAs(content, "images.zip");
   });
 
-  promise.then(function(){
-    zip.generateAsync({type:"blob"}).then(function (content) {
-      saveAs(content, "images.zip");
-    });
-  });
-  deferreds.resolve();
-
-  $("body").find("#tkw-overlay").remove();
   console.log("img-downloader end.");
-});
+}
