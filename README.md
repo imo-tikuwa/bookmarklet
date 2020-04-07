@@ -11,6 +11,10 @@
 table-row-to-clipbord.txtとできることは一緒です。  
 アラートがいちいち表示されるのがめんどくさい人用。
 
+### image-downloader.txt
+ページ内のimgタグから画像ファイルを取得、Zip圧縮してダウンロードします。  
+lazy-loadなどによってimgタグ自体が置換されてる場合は、手動で読み込んでからブックマークレットを実行する必要があります。
+
 ## ブックマークレット化について
 以下のリンクのツールでブックマークレット化してます。  
 [Bookmarklet Crunchinator](http://ted.mielczarek.org/code/mozilla/bookmarklet.html)
