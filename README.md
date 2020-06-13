@@ -15,6 +15,9 @@ table-row-to-clipbord.txtとできることは一緒です。
 ページ内のimgタグから画像ファイルを取得、Zip圧縮してダウンロードします。  
 lazy-loadなどによってimgタグ自体が置換されてる場合は、手動で読み込んでからブックマークレットを実行する必要があります。
 
+### filter-seller-only-amazon.txt
+Amazonの検索結果一覧画面で実行するとAmazon.co.jpから出品されている商品のみを表示するページに遷移します。
+
 ## ブックマークレット化について
 以下のリンクのツールでブックマークレット化してます。  
 [Bookmarklet Crunchinator](http://ted.mielczarek.org/code/mozilla/bookmarklet.html)
