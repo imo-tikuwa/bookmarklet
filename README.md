@@ -21,6 +21,11 @@ Amazonの検索結果一覧画面で実行するとAmazon.co.jpから出品さ�
 ### github-commit-diff.txt
 GitHubのコミット一覧画面で2つのコミットIDを選択することで、コミット差分を表示するページへ遷移します。
 
+### github-commit-diff2.txt
+github-commit-diff.txtの複数ページ対応版。  
+コミット一覧画面の異なるページのコミットID同士で差分を出せるようになった。  
+コミットIDはローカルストレージで保管しています。
+
 ## ブックマークレット化について
 以下のリンクのツールでブックマークレット化してます。  
 [Bookmarklet Crunchinator](http://ted.mielczarek.org/code/mozilla/bookmarklet.html)
