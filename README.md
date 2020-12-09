@@ -18,6 +18,9 @@ lazy-loadなどによってimgタグ自体が置換されてる場合は、手�
 ### filter-seller-only-amazon.txt
 Amazonの検索結果一覧画面で実行するとAmazon.co.jpから出品されている商品のみを表示するページに遷移します。
 
+### github-commit-diff.txt
+GitHubのコミット一覧画面で2つのコミットIDを選択することで、コミット差分を表示するページへ遷移します。
+
 ## ブックマークレット化について
 以下のリンクのツールでブックマークレット化してます。  
 [Bookmarklet Crunchinator](http://ted.mielczarek.org/code/mozilla/bookmarklet.html)
