@@ -68,6 +68,6 @@
 
   // カーソルがテーブルを抜けたときの処理
   $(document).find("table").on("mouseleave", function(e){
-    $(event.target).parents('table').find('.table-row-to-clipbord-current').removeClass('table-row-to-clipbord-current');
+    $(e.target).parents('table').find('.table-row-to-clipbord-current').removeClass('table-row-to-clipbord-current');
   });
 });
