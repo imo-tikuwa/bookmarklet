@@ -1,6 +1,6 @@
 if (location.origin != 'https://www.amazon.co.jp' || location.pathname != '/s') {
   alert("このブックマークレットはAmazon.co.jpの検索結果一覧で実行してください");
-  return;
+  exit;
 }
 
 if (window.confirm('Amazon.co.jpから出品されている商品のみを表示します')) {

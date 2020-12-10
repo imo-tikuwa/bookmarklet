@@ -1,7 +1,7 @@
 let pathnames = location.pathname.split('/');
 if (location.origin != 'https://github.com' || pathnames[3] !== 'commits') {
   window.alert('このブックマークレットはGitHubのコミット一覧画面で実行してください');
-  return;
+  exit;
 }
 
 // 2重起動防止

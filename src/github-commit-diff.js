@@ -1,7 +1,7 @@
 let pathnames = location.pathname.split('/');
 if (location.origin != 'https://github.com' || pathnames[3] !== 'commits') {
   window.alert('このブックマークレットはGitHubのコミット一覧画面で実行してください');
-  return;
+  exit;
 }
 
 let init_message = '差分を比較したいコミットのコピーボタンを2つクリックしてください。(最初に古い方、次に新しい方を選択)';
